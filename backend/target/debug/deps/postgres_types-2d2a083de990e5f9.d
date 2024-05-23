@@ -1,0 +1,9 @@
+d:\Full Stack Applications\Nextjs, Rust, Docker, Postgresql Full Stack App\setup\backend\target\debug\deps\libpostgres_types-2d2a083de990e5f9.rmeta: C:\Users\awais\.cargo\registry\src\index.crates.io-6f17d22bba15001f\postgres-types-0.2.6\src\lib.rs C:\Users\awais\.cargo\registry\src\index.crates.io-6f17d22bba15001f\postgres-types-0.2.6\src\pg_lsn.rs C:\Users\awais\.cargo\registry\src\index.crates.io-6f17d22bba15001f\postgres-types-0.2.6\src\private.rs C:\Users\awais\.cargo\registry\src\index.crates.io-6f17d22bba15001f\postgres-types-0.2.6\src\special.rs C:\Users\awais\.cargo\registry\src\index.crates.io-6f17d22bba15001f\postgres-types-0.2.6\src\type_gen.rs
+
+d:\Full Stack Applications\Nextjs, Rust, Docker, Postgresql Full Stack App\setup\backend\target\debug\deps\postgres_types-2d2a083de990e5f9.d: C:\Users\awais\.cargo\registry\src\index.crates.io-6f17d22bba15001f\postgres-types-0.2.6\src\lib.rs C:\Users\awais\.cargo\registry\src\index.crates.io-6f17d22bba15001f\postgres-types-0.2.6\src\pg_lsn.rs C:\Users\awais\.cargo\registry\src\index.crates.io-6f17d22bba15001f\postgres-types-0.2.6\src\private.rs C:\Users\awais\.cargo\registry\src\index.crates.io-6f17d22bba15001f\postgres-types-0.2.6\src\special.rs C:\Users\awais\.cargo\registry\src\index.crates.io-6f17d22bba15001f\postgres-types-0.2.6\src\type_gen.rs
+
+C:\Users\awais\.cargo\registry\src\index.crates.io-6f17d22bba15001f\postgres-types-0.2.6\src\lib.rs:
+C:\Users\awais\.cargo\registry\src\index.crates.io-6f17d22bba15001f\postgres-types-0.2.6\src\pg_lsn.rs:
+C:\Users\awais\.cargo\registry\src\index.crates.io-6f17d22bba15001f\postgres-types-0.2.6\src\private.rs:
+C:\Users\awais\.cargo\registry\src\index.crates.io-6f17d22bba15001f\postgres-types-0.2.6\src\special.rs:
+C:\Users\awais\.cargo\registry\src\index.crates.io-6f17d22bba15001f\postgres-types-0.2.6\src\type_gen.rs:
