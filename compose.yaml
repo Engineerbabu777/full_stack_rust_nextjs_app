@@ -1,4 +1,13 @@
 services:
+ rustapp:
+  container_name: rustapp
+  image: image-name:latest
+  build:
+   context: ./backend
+   dockerfile: rust.dockerfile
+   args:
+   DATABASE_URL: add-url
+
  db:
   container_name: db 
   image: postgres:13
