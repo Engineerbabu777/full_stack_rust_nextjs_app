@@ -16,26 +16,29 @@ struct User{
 }
 
 // DATABASE URL!
-const DB_URL:&str = env!("DATABASE_URL");
+const DB_URL:&str = !env("DATABASE_URL");
 
 // CONSTANTS!
 const OK_RESPONSE: &str = "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n";
 const NOT_FOUND: &str = "HTTP/1.1 404 NOT FOUND\r\n\r\n";
-const INTERNAL_ERROR: &str = "HTTP/1.1 500 INTERNAL ERROR\r\n\r\n";
+const INTERNAL_SERVER_ERROR: &str = "HTTP/1.1 500 INTERNAL ERROR\r\n\r\n";
 
 
 // main function!
 fn  main(){
 
     // SET THE DATABASE!
-    if let Err(_) = set_database() {
-        println!("Error setting database!");
+    if let Err(e) = set_database() {
+        println!("Error setting database! {}",e);
         return;
     }
+
+    let listener = TcpListener::bind(format!(0.0.0.0:8080)).unwrap();
 
     // start server and print port!
     println!("Server is listening on port 8080");
 
+    // handle the client
     for stream in listener.incoming() {
         match stream {
             Ok(stream) => {
@@ -61,17 +64,19 @@ fn set_database() -> Result<(), PostgresError>{
     )?;
 
     Ok(())
-}
+} 
 
 // GET ID FROM THE REQUEST URL!
 fn get_id(request: &str) -> &str {
-    request.split("/").nth(4).unwrap_or_default().split_whitespace().next().unwrap_or_default()
+    request.split("/").nth(2).unwrap_or_default().split_whitespace().next().unwrap_or_default()
 }
 
-// Deserialize SER FROM THE REQUEST BODY!
+// Deserialize USER FROM THE REQUEST BODY!
 fn get_user_request_body(request:&str) -> Result<User, serde_json::Error> {
     serde_json::from_str(request.split("\r\n\r\n").last().unwrap_or_default())
 }
+
+
 
 // ADD
 fn handle_client(mut stream:TcpStream) {
@@ -94,5 +99,41 @@ fn handle_client(mut stream:TcpStream) {
            stream.write_all(format!("{}{}",status_line,content).as_bytes()).unwrap();
         }
         Err(e) => eprintln!("Unable to read stream: {}",e),
+    }
+}
+
+// CONTROLLERS!
+
+fn handle_post_request(request: &str) -> (String, String) {
+    match (get_user_request_body(&request), Client::connect(DB_URL,NoTls)){
+        (Ok(user), Ok(mut client)) => {
+            client.execute(
+                "INSERT INTO users (name, email) VALUES ($1, $2)",
+                &[&user.name, &user.email]
+            ).unwrap();
+            (OK_RESPONSE.to_string(),"User created".to_string())
+        }
+        _ => (INTERNAL_SERVER_ERROR.to_string(), "Error".to_string())
+    }
+}
+
+
+// handle get request function!
+fn handle_get_request(request: &str) -> (String, String) {
+    match(get_id(&request).parse::<i32>, Client::connect(DB_URL,NoTls)){
+        (Ok(id), Ok(mut client)) => 
+            match client.query("SELECT * FROM users WHERE id = $1", &[&id]){
+                OK(row) => {
+                    let user = User {
+                        id: row.get(0),
+                        name : row.get(1),
+                        email: row.get(2),
+                    };
+
+                    (OK_RESPONSE.to_string(), serde_json::to_string(&user).unwrap())
+                }
+                _ => (NOT_FOUND.to_string(), "404 not found".to_string())
+            }
+         _ => (INTERNAL_SERVER_ERROR.to_string(), "Error".to_string())
     }
 }
