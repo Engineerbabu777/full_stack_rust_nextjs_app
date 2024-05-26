@@ -6,7 +6,7 @@ services:
    context: ./backend
    dockerfile: rust.dockerfile
    args:
-   DATABASE_URL: add-url
+    DATABASE_URL: add-url
 
  db:
   container_name: db 
@@ -17,6 +17,8 @@ services:
    POSTGRES_DB: postgres
   ports: 
    - 5432:5432
+  volumes:
+   - pgdata:/var/lib/postgresql/data 
  
 
 volumes:

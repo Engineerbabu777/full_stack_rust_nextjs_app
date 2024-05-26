@@ -3,3 +3,5 @@ d:\Full Stack Applications\Nextjs, Rust, Docker, Postgresql Full Stack App\setup
 d:\Full Stack Applications\Nextjs, Rust, Docker, Postgresql Full Stack App\setup\backend\target\debug\deps\backend-f91a5d41d016d16b.d: src\main.rs
 
 src\main.rs:
+
+# env-dep:DATABASE_URL
